@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "name": "Jack",
+    "age": "5",
+    "breed": "German Shepherd",
+    "image": "https://petpost-images-sg.s3.us-east-2.amazonaws.com/GermanShepherd.png"
+  },
+  {
+    "name": "Fluffy",
+    "age": "4",
+    "breed": "Golden Retriever",
+    "image": "https://petpost-images-sg.s3.us-east-2.amazonaws.com/GoldenRetriever.png"
+  }
+]
