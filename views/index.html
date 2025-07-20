@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <title>PetPost - Adoptable Pets</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-size: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 20px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #4a6fa5;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    a:hover {
+      color: #2c4f7b;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 16px;
+      border-bottom: 1px solid #eaeaea;
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: #f0f3f8;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    td img {
+      max-width: 100px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Adoptable Pets</h1>
+    <a href="/upload">+ Add a New Pet</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Breed</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pet in pets %}
+        <tr>
+          <td>{{ pet.name }}</td>
+          <td>{{ pet.age }}</td>
+          <td>{{ pet.breed }}</td>
+          <td><img src="{{ pet.image }}" alt="{{ pet.name }}"></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

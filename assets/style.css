@@ -1,0 +1,14 @@
+body {
+  font-family: Arial;
+  padding: 20px;
+}
+
+img {
+  max-width: 200px;
+}
+
+.pet {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
