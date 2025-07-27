@@ -15,6 +15,7 @@ AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 S3_REGION = os.getenv('AWS_REGION')
 S3_BUCKET = os.getenv('S3_BUCKET_NAME')
+S3_JSON_FILE = 'pets.json'
 
 # Initialize S3 client
 s3_client = boto3.client(
@@ -26,20 +27,24 @@ s3_client = boto3.client(
 
 
 app = Flask(__name__, template_folder='views')
-DATA_FILE = 'pets.json'
 
 def load_pets():
-    if not os.path.exists(DATA_FILE) or os.path.getsize(DATA_FILE) == 0:
-        return []
     try:
-        with open(DATA_FILE) as f:
-            return json.load(f)
-    except json.JSONDecodeError:
+        obj = s3_client.get_object(Bucket=S3_BUCKET, Key=S3_JSON_FILE)
+        data = obj['Body'].read().decode('utf-8')
+        return json.loads(data)
+    except s3_client.exceptions.NoSuchKey:
+        return []
+    except Exception as e:
+        print(f"Error loading pets.json from S3: {e}")
         return []
 
 def save_pets(pets):
-    with open(DATA_FILE, 'w') as f:
-        json.dump(pets, f, indent=2)
+    try:
+        json_data = json.dumps(pets, indent=2)
+        s3_client.put_object(Bucket=S3_BUCKET, Key=S3_JSON_FILE, Body=json_data)
+    except Exception as e:
+        print(f"Error saving pets.json to S3: {e}")
 
 @app.route('/')
 def index():
